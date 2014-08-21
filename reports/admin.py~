@@ -4,4 +4,5 @@ from django.contrib import admin
 
 from .models import Dealer,DataiumDMA
 
-admin.site.register(Dealer,DataiumDMA)
+admin.site.register(Dealer)
+admin.site.register(DataiumDMA)
