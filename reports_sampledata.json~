@@ -79,7 +79,7 @@
       "dealercity": "Latham",
       "dealerstate": "NY",
       "dealermainwebsite": "liainfiniti.com",
-      "dma_id": "2",
+      "dma": "2",
       "dealerdma": "Albany-Schenectady-Troy, NY" 
     }
   },
@@ -91,7 +91,7 @@
       "dealercity": "Austin",
       "dealerstate": "TX",
       "dealermainwebsite": "howdyhonda.com",
-      "dma_id": "11",
+      "dma": "11",
       "dealerdma": "Austin, TX" 
     }
   },
@@ -103,7 +103,7 @@
       "dealercity": "Stone Mountain",
       "dealerstate": "GA",
       "dealermainwebsite": "stonemountainvw.com",
-      "dma_id": "9",
+      "dma": "9",
       "dealerdma": "Atlanta, GA" 
     }
   }

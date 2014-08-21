@@ -80,7 +80,9 @@
       "dealerstate": "NY",
       "dealermainwebsite": "liainfiniti.com",
       "dma": "2",
-      "dealerdma": "Albany-Schenectady-Troy, NY" 
+      "dealerdma": "Albany-Schenectady-Troy, NY" ,
+      "dealerlat":42.767739,
+      "dealerlong":-73.752770
     }
   },
   {
@@ -92,7 +94,10 @@
       "dealerstate": "TX",
       "dealermainwebsite": "howdyhonda.com",
       "dma": "11",
-      "dealerdma": "Austin, TX" 
+      "dealerdma": "Austin, TX",
+      "dealerlat":30.211327,
+      "dealerlong":-97.723226
+ 
     }
   },
   {
@@ -104,7 +109,9 @@
       "dealerstate": "GA",
       "dealermainwebsite": "stonemountainvw.com",
       "dma": "9",
-      "dealerdma": "Atlanta, GA" 
+      "dealerdma": "Atlanta, GA",
+      "dealerlat":33.844682,
+      "dealerlong":-84.052632 
     }
   }
 ]
