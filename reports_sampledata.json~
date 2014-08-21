@@ -1,0 +1,67 @@
+
+[
+  {
+    "model": "reports.dataiumdma",
+    "pk": 1,
+    "fields": {
+      "dmaname": "Abilene-Sweetwater, TX",
+      "dataiumdmaid": "1"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 9,
+    "fields": {
+      "dmaname": "Atlanta, GA",
+      "dataiumdmaid": "9"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 11,
+    "fields": {
+      "dmaname": "Austin, TX",
+      "dataiumdmaid": "11"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 15,
+    "fields": {
+      "dmaname": "Baton Rouge, LA",
+      "dataiumdmaid": "15"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 26,
+    "fields": {
+      "dmaname": "Buffalo, NY",
+      "dataiumdmaid": "26"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 31,
+    "fields": {
+      "dmaname": "Champaign and Springfield-Decatur, IL",
+      "dataiumdmaid": "31"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 34,
+    "fields": {
+      "dmaname": "Charlotte, NC",
+      "dataiumdmaid": "34"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
+    "pk": 38,
+    "fields": {
+      "dmaname": "Chicago, IL",
+      "dataiumdmaid": "38"
+    }
+  }
+]
