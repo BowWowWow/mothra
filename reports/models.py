@@ -22,6 +22,8 @@ class Dealer(models.Model):
    dealerdma = models.CharField(max_length=50)
    dealerlat = models.DecimalField(max_digits=10,decimal_places=6,null=True)
    dealerlong = models.DecimalField(max_digits=10,decimal_places=6,null=True)
+   dealeractive = models.CharField(max_length=3,null=True)
+   dealerdeleted = models.CharField(max_length=3,null=True)
 
    def __unicode__(self):
        return ''.join([self.dealername,' ',self.dealercity,', ',self.dealerstate,])
