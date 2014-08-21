@@ -10,6 +10,14 @@
   },
   {
     "model": "reports.dataiumdma",
+    "pk": 2,
+    "fields": {
+      "dmaname": "Albany-Schenectady-Troy, NY",
+      "dataiumdmaid": "2"
+    }
+  },
+  {
+    "model": "reports.dataiumdma",
     "pk": 9,
     "fields": {
       "dmaname": "Atlanta, GA",
@@ -63,5 +71,41 @@
       "dmaname": "Chicago, IL",
       "dataiumdmaid": "38"
     }
-  }
+  },
+  {
+    "model": "reports.dealer",
+    "pk": 1,
+    "fields": {
+      "dealername": "Lia Infiniti",
+      "dealercity": "Latham",
+      "dealerstate": "NY",
+      "dealermainwebsite": "liainfiniti.com",
+      "dma_id": "2",
+      "dealerdma": "Albany-Schenectady-Troy, NY" 
+    }
+  },
+  {
+    "model": "reports.dealer",
+    "pk": 2,
+    "fields": {
+      "dealername": "Howdy Honda",
+      "dealercity": "Austin",
+      "dealerstate": "TX",
+      "dealermainwebsite": "howdyhonda.com",
+      "dma_id": "11",
+      "dealerdma": "Austin, TX" 
+    }
+  },
+  {
+    "model": "reports.dealer",
+    "pk": 12,
+    "fields": {
+      "dealername": "Stone Mountain Volkswagen",
+      "dealercity": "Stone Mountain",
+      "dealerstate": "GA",
+      "dealermainwebsite": "stonemountainvw.com",
+      "dma_id": "9",
+      "dealerdma": "Atlanta, GA" 
+    }
+  },
 ]
