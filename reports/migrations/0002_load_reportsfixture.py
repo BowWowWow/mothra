@@ -7,6 +7,7 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
+        "Write your forward methods here."
         # from django.core.management import call_command
         # call_command("loaddata","reports_sampledata.json")
         # Note: Don't use "from appname.models import ModelName". 
