@@ -1,4 +1,3 @@
-
 [
   {
     "model": "reports.dataiumdma",
@@ -107,5 +106,5 @@
       "dma_id": "9",
       "dealerdma": "Atlanta, GA" 
     }
-  },
+  }
 ]
