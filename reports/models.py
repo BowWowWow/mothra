@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -174,6 +175,20 @@ class MarketReportYearMonth(models.Model):
    def __unicode__(self):
         return self.marketreportyearmonthdesc
 
+class UserProfile(models.Model):
+     user = models.OneToOneField(User,unique=True)
+     dealer = models.ForeignKey(Dealer,null=True)
+     bio = models.CharField(verbose_name='About Me',null=True,max_length=200,blank=True)
+     position = models.CharField(verbose_name='My Position',null=True,max_length=50,blank=True)
+     has_optedout = models.BooleanField(verbose_name='Opt Out of Everything',default=False)
+     wants_alerts = models.BooleanField(verbose_name='Receive Alerts',default=True)
+     wants_marketinfo = models.BooleanField(verbose_name='Receive Market Info',default=True)
+     wants_newsletters = models.BooleanField(verbose_name = 'Receive Newsletters',default=True)
+     wants_marketreport = models.BooleanField(verbose_name='Receive Monthly Market Report',default=True)
+     
+     def __unicode__(self):
+          return "%s's profile" % self.user
+
 
 # jpb, 6/14/2014 added class for market report
 class DealerMarketReport(models.Model):
@@ -193,8 +208,6 @@ class DealerMarketReport(models.Model):
    marketreportdeleted = models.CharField(verbose_name='Market Report Deleted',max_length=3,null=True,default='N')
    marketreportcreatedate = models.DateTimeField(verbose_name='Market Report Created On',auto_now_add=True,null=True)
    marketreportupdatedate = models.DateTimeField(verbose_name='Market Report Updated On',auto_now=True,null=True)
-
-
 
    class Meta:
        verbose_name="Market Report"
