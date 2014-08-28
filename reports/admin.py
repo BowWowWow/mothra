@@ -19,10 +19,24 @@ class DealerAdmin(admin.ModelAdmin):
 class MarketReportInline(admin.TabularInline):
     model=DealerMarketReport
 
+def make_marketreport(modeladmin, request,queryset):
+    # print object
+    for object in queryset:
+       ym = object
+       d = Dealer.objects.filter(dealerinactive='N',dealerdeleted='N')
+       for item in d:
+           mkrpt = DealerMarketReport(dealer=item,reportyearmonth=ym)
+           mkrpt.save()
+    # self.message_user(request,"Market Reports Created")
+
+
+make_marketreport.short_description = "Create Market Reports for Selected Year and Month"
+
 class MarketReportYearMonthAdmin(admin.ModelAdmin):
     inlines = [
          MarketReportInline,
     ]
+    actions = [make_marketreport]
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile

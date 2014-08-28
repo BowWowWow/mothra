@@ -17,6 +17,7 @@ import dj_database_url
 # BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+PROJECT_PATH=os.path.dirname(os.path.abspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -33,6 +34,15 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# jpb, 8/28, added EMAIL setup
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mandrillapp.com'
+EMAIL_HOST_USER = 'jburns@dataium.com'
+EMAIL_HOST_PASSWORD = 'ESYomNVo5D661rMsbkz8-w'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'no-reply@dataium.com'
+
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -47,6 +57,8 @@ INSTALLED_APPS = (
     # third party 
     # jpb, 2014-08-20, added south
     'south',
+    # jpb 2014-08-27, added tasteypie
+    # 'tastypie',
     # internal
     # jpb, 2014-08-20, added reports
     'reports',
@@ -98,8 +110,12 @@ USE_TZ = True
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
+# STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR,'static'),
+# )
+
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'static'),
+   os.path.join(PROJECT_PATH,'static'),
 )
 
 

@@ -19,10 +19,25 @@ class DealerAdmin(admin.ModelAdmin):
 class MarketReportInline(admin.TabularInline):
     model=DealerMarketReport
 
+
+
+
 class MarketReportYearMonthAdmin(admin.ModelAdmin):
     inlines = [
          MarketReportInline,
     ]
+    actions = ['make_marketreport']
+
+    def make_marketreport(self, request,queryset):
+        make_marketreport.short_description = "Create Market Reports for Selected Year and Month"
+        for object in queryset:
+           ym = object
+           d = Dealer.objects.filter(dealerinactive='N',dealerdeleted='N')
+           for item in d:
+               mkrpt = DealerMarketReport(dealer=item,reportyearmonth=ym)
+               mkrpt.save()
+        self.message_user(request,"Market Reports Created")
+
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -38,4 +53,5 @@ admin.site.register(DataiumDMA,DataiumDMAAdmin)
 admin.site.register(DealerSite,DealerSiteAdmin)
 admin.site.register(MarketReportYearMonth,MarketReportYearMonthAdmin)
 admin.site.register(DealerMarketReport)
+admin.site.unregister(User)
 admin.site.register(User,UserAdmin)

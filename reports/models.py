@@ -175,6 +175,7 @@ class MarketReportYearMonth(models.Model):
    def __unicode__(self):
         return self.marketreportyearmonthdesc
 
+
 class UserProfile(models.Model):
      user = models.OneToOneField(User,unique=True)
      dealer = models.ForeignKey(Dealer,null=True)
