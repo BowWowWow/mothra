@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+
+<p>Market Report will be sent to the following recipients:</p>
+
+<form action="" method="post">
+
+    {{ mkrpt_form }}
+
+    <p>The report will be sent to:</p>
+
+    <ul>{{ mkrpt.dealer.dealername|unordered_list }}</ul>
+
+    <input type="hidden" name="action" value="send_reports" />
+    <input type="submit" name="send" value="Send Reports" />
+</form>
+
+{% endblock %}

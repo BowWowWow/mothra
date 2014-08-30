@@ -19,8 +19,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 PROJECT_PATH=os.path.dirname(os.path.abspath(__file__))
 
-
-# Quick-start development settings - unsuitable for production
+#  Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -32,6 +31,11 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# jpb, 8/30 added TEMPLATE_DIRS
+TEMPLATE_DIRS = (
+     PROJECT_PATH + '/templates/'
+)
 
 
 # jpb, 8/28, added EMAIL setup
