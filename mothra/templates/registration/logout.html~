@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block content %}
+<form class="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+{% csrf_token %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="well">
+            <fieldset>
+                <legend>Please log in...</legend>
+                <p>Sign in or register with <a href="/login/google/">Google</a>.</p>
+                <p class="lead">..or..</p>
+                {{ form|bootstrap }}
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <input type="hidden" name="next" value="/reports/site/dhl"></input>
+                </div>
+            </fieldset>
+            <p><small>Forgot your username or password?  No worries! <a href="/accounts/password_reset">Click here.</a></small></p>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}

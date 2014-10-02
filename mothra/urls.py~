@@ -1,0 +1,29 @@
+from django.conf.urls import patterns, include, url
+
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'mothra.views.home', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
+    url(r'^admin/', include(admin.site.urls)),
+    # jpb, added login/logout info
+    # url(r'^accounts/login/$','django.contrib.auth.views.login',name='login'),
+    # url(r'^accounts/logout/$','django.contrib.auth.views.logout',name='logout'),
+    # url(r'^edit_profile/$', auth(UserProfileEditView.as_view()), name="edit_profile"),
+    url('^accounts/', include('django.contrib.auth.urls')),
+    url('',include('social.apps.django_app.urls',namespace='social')),
+    #url('^accounts/password_reset/$', 'django.contrib.auth.views.password_reset',name='password_reset'),
+
+    # jpb, 10/1/2014, added password reset info
+    # url(r'^reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$','django.contrib.auth.views.reset',name='reset_confirm'),
+
+    # url(r'^user/password/reset/$','reports.views.password_reset', {'post_reset_redirect' : '/#/login?resetemail=true'},name="password_reset"),
+
+    # jpb, added reference to reports URLs
+    url(r'^reports/',include('reports.urls',namespace='reports')),
+    
+
+)

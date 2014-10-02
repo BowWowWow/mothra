@@ -58,11 +58,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # jpb, 2014-08-20, added humanize
     'django.contrib.humanize',
+    # jpb, 2014-09-30, added bootstapform
+    'bootstrapform',
     # third party 
     # jpb, 2014-08-20, added south
     'south',
     # jpb 2014-08-27, added tasteypie
     # 'tastypie',
+    # jpb, 2014-09-29 added python-social-auth
+    'social.apps.django_app.default',
     # internal
     # jpb, 2014-08-20, added reports
     'reports',
@@ -77,10 +81,20 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GoogleOAuth',
+    'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
 ROOT_URLCONF = 'mothra.urls'
 
 WSGI_APPLICATION = 'mothra.wsgi.application'
 
+# jpb, 9/29/2014, addded LOGIN_REDIRECT_URL
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -139,5 +153,8 @@ if os.environ.get('DATABASE_URL'):
 
 # jpb, end of Django DB Support
 
-
+TEMPLATE_CONTEXT_PROCESSORS = (
+'django.core.context_processors.request',
+'django.contrib.auth.context_processors.auth',
+)
 

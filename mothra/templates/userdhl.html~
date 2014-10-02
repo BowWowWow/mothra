@@ -1,0 +1,22 @@
+{% extends 'dhlbase.html' %}
+
+{% block dhlleads %}  
+
+            {% for row in dhlleads %}
+            <tr>
+               <td>{{row.full_name}}</td>
+               <td>{{row.shopper_email}}</td>
+               <td>{{row.shopper_phone}}</td>
+               <td>{{row.shopper_intensity}}</td>
+               <td>{{row.shopper_first_activity}}</td>
+               <td>{{row.shopper_last_lead_date}}</td>
+               <td>{{row.shopper_last_activity}}</td>
+            </tr>
+            {% endfor %}
+ 
+
+{% endblock %}
+
+
+
+

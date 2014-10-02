@@ -175,6 +175,7 @@ class MarketReportYearMonth(models.Model):
    def __unicode__(self):
         return self.marketreportyearmonthdesc
 
+
 class UserProfile(models.Model):
      user = models.OneToOneField(User,unique=True)
      dealer = models.ForeignKey(Dealer,null=True)
@@ -185,6 +186,7 @@ class UserProfile(models.Model):
      wants_marketinfo = models.BooleanField(verbose_name='Receive Market Info',default=True)
      wants_newsletters = models.BooleanField(verbose_name = 'Receive Newsletters',default=True)
      wants_marketreport = models.BooleanField(verbose_name='Receive Monthly Market Report',default=True)
+     wants_dailyhitlist = models.BooleanField(verbose_name='Receive Daily Hit List',default=True)
      
      def __unicode__(self):
           return "%s's profile" % self.user
@@ -224,5 +226,32 @@ class DealerMarketReport(models.Model):
        self.marketreportutilityimage = ''.join(['dealer_util_',str(self.dealer.id),'_',self.reportyearmonth.marketreportyearmonthchar])
        self.marketreportmiscimage = ''.join(['dealer_misc_',str(self.dealer.id),'_',self.reportyearmonth.marketreportyearmonthchar])
        super(DealerMarketReport,self).save()
+
+
+
+# jpb, 9/26/2014 added class for market report
+class DealerDailyHitList(models.Model):
+   dealersite = models.ForeignKey(DealerSite)
+   full_name=models.CharField(max_length=100,verbose_name='Shopper Full Name',null=True,blank=True)
+   shopper_email=models.CharField(max_length=100,verbose_name='Shopper Email',null=True,blank=True)
+   shopper_phone=models.CharField(max_length=20,verbose_name='Shopper Phone',null=True,blank=True)
+   shopper_intensity=models.IntegerField(max_length=10,verbose_name='Shopper Intensity',null=True,blank=True)
+   shopper_first_activity=models.CharField(max_length=20,verbose_name='Shopper First Activity',null=True,blank=True)
+   shopper_last_lead_date=models.CharField(max_length=20,verbose_name='Shopper Last Lead Date',null=True,blank=True)
+   shopper_last_activity=models.CharField(max_length=20,verbose_name='Shopper Last Activity Date',null=True,blank=True)
+   shopper_last_site = models.CharField(max_length=50,verbose_name='Shopper Last Site Visited',null=True,blank=True)
+   shopper_preferred_vehicle = models.CharField(max_length=50,verbose_name='Shopper Preferred Vehicle',null=True,blank=True)
+   hitlistinactive = models.CharField(verbose_name='Daily Hit List Inactive',default='N',null=True,max_length=3)
+   hitlistdeleted = models.CharField(verbose_name='Daily Hit List Deleted',max_length=3,null=True,default='N')
+   hitlistcreatedate = models.DateTimeField(verbose_name='Daily Hit List Created On',auto_now_add=True,null=True)
+   hitlistupdatedate = models.DateTimeField(verbose_name='Daily Hit List Updated On',auto_now=True,null=True)
+
+   class Meta:
+       verbose_name="Daily Hit List"
+
+   def __unicode__(self):
+       return ''.join([self.dealersite,' ',self.full_name,' ',self.shopper_email,])
+
+
 
 

@@ -1,0 +1,24 @@
+
+
+{% extends 'daily_hitlist.html' %}
+
+
+
+{% block clientname %} 
+
+       {{client.dealername}}
+
+{% endblock %}
+
+
+
+{% block city %}
+    {{client.dealercity}}, {{client.dealerstate}}
+{% endblock %}
+
+
+
+{% block clientsitename %}
+<a href="http://{{client.dealermainwebsite}}" style="text-decoration: none; color: #00a8e0;">{{client.clientwebsite}}</a>
+{% endblock %}
+

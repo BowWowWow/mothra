@@ -4,7 +4,7 @@
 
 <p>Market Report will be sent to the following recipients:</p>
 
-<form action="" method="post">
+<form action="" method="post">{% csrf_token %}
 
     {{ mkrpt_form }}
 
@@ -12,8 +12,9 @@
 
     <ul>{{ mkrpt|unordered_list }}</ul>
 
-    <input type="hidden" name="action" value="send_reports" />
-    <input type="submit" name="send" value="Send Reports" />
+   
+    <input type="hidden" name="action" value="send_marketemail" />
+    <input type="submit" name="send" value="Send" />
 </form>
 
 {% endblock %}

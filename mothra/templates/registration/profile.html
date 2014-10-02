@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block content %}
+
+
+
+<form class="form" method="post" action="{% url '' %}">
+{% csrf_token %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="well">
+            <fieldset>
+                <legend>{{user.fullname}} Update Your Profile</legend>
+                <p>Please take a moment to update your profile.</p>
+            
+                {{ form|bootstrap }}
+                <div class="form-group pull-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+</form>
+{% endblock %}

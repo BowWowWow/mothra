@@ -1,0 +1,147 @@
+
+
+{% extends 'daily_hitlist.html' %}
+
+
+
+{% block clientname %} 
+
+       {{dealer.dealername}}
+
+{% endblock %}
+
+{% block loginurl %}
+
+
+     <a href="{{ request.build_absolute_uri(reverse('django.contrib.auth.views.login')) }}" style="font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; background: #2F8ED4; border: 2px solid #bbbbbb; color: #ffffff; display: inline-block; border-radius: 2px; width: 44%; padding: 16px 8px;">
+{% endblock %}
+
+{% block city %}
+    {{client.dealercity}}, {{client.dealerstate}}
+{% endblock %}
+
+
+
+{% block clientsitename %}
+<a href="http://{{client.dealermainwebsite}}" style="text-decoration: none; color: #00a8e0;">{{client.clientwebsite}}</a>
+{% endblock %}
+
+{% block clientdma %}
+    {{client.clientdma}} DMA
+{% endblock %}
+
+{% block reportmonth %}
+    {{client.dataiumreportmonth}}
+{% endblock %}
+https://dj7deke20y9ak.cloudfront.net/bintel/marketreport/images/market_report-logo.png
+
+{% block crossshopimage %}
+    <td align="center"><img src="https://dj7deke20y9ak.cloudfront.net/bintel/marketreport/charts/shops/{{client.clientshopimage}}.png" width="350" height="140"></td>
+{% endblock %}
+
+{% block dmmimage %}
+    <td align="center"><img src="https://dj7deke20y9ak.cloudfront.net/bintel/marketreport/charts/dmm/{{client.clientdmmimage}}.png" width="202" height="140"></td>
+{% endblock %}
+
+{% block searchimage %}
+    <td align="center" style="background-color: #ffffff;  padding-top:8px;"><img src="https://dj7deke20y9ak.cloudfront.net/bintel/marketreport/charts/search/{{client.clientsocialimage}}.png" width="180" height="100"></td>
+{% endblock %}
+
+{% block hitlist %}
+<td>
+    <table width="394" height="180" style="font-family:Arial;color:#e5e5e5;size:10px;text-align:left;padding-left:10px;padding-right:10px;" >
+        <tr>
+            <th><font style="color:#000000;font-size:12px">Vehicle</font></th>
+            <th><font style="color:#000000;font-size:12px">Index</font></th>
+        </tr>
+        {% for h in hitlist %}
+            <tr style="background:{% cycle ' #efefef' '#ffffff' %}">
+                <td><font style="color:#000;font-size:12px">{{ h.vehicle }}</font></td>
+                <td><font style="color:#000;font-size:12px">{{ h.shopperindex }}</font></td>
+            </tr>
+       {% endfor %}
+       
+    </table>
+</td>
+{% endblock %}
+
+
+
+{% block newusedsplit %}
+<td>
+    <tr>
+        <td style="padding-left: 16px; padding-right: 10px; padding-bottom: 6px;"><font style="color:#00a8e0;font-size:14px;font-family: Helvetica, Arial, sans-serif;font-weight:bold;">New</font></td>
+        <td style="padding-left: 10px; padding-right: 10px; padding-bottom: 6px;"><font style="color:#efefef;font-size:14px;font-family: Helvetica, Arial, sans-serif;font-weight:bold;">Used</font></td>
+    </tr>
+
+ {% for v in newuseddata %}
+
+    <tr>
+        <td style="padding-left: 18px; padding-right: 18px; padding-bottom: 6px;"><font style="color:#00a8e0;font-size:14px;font-weight:bold;">{{v.newpercent}}</font></td>
+        <td style="padding-left: 18px; padding-right: 18px; padding-bottom: 6px;"><font style="color:#efefef;font-size:14px;font-weight:bold;">{{v.usedpercent}}</font></td>
+    </tr>
+
+ {% endfor %}
+ 
+</td>
+{% endblock %}
+
+{% block removeme %}
+	<td align="center" style="color: #7B7B7B; font-size: 10px; padding-top: 16px; padding-bottom: 8px;">You're receiving this email because you subcribed to Dataium's Market Report. To stop receiving this report, <a href="mailto:support@dataium.com?Subject=Unsubscribe%20 {{client.clientname}}">unsubscribe</a>.</td>
+{% endblock %}
+
+{% block hitlistcontent %}
+
+    <script type="text/javascript">
+    </script>
+    <script>
+        // we should be able to do our data massaging here
+        var hitlist = "{{ hitlist | escapejs }}";
+         // jpb, DEBUG ONLY
+         console.log(hitlist);
+         // jpb, END OF DEBUG
+    </script>
+
+{% endblock %}
+
+{% block graphcontentrow1 %}
+
+    <script type="text/javascript">
+    </script>
+    <script>
+        // we should be able to do our data massaging here
+        var shopdata = "{{ shops | escapejs }}";
+         // jpb, DEBUG ONLY
+         // console.log(shopdata);
+         // jpb, END OF DEBUG
+    </script>
+
+{% endblock %}
+
+{% block graphcontentrow2 %}
+
+    <script>
+        // we should be able to do our data massaging here
+        var dmmdata = "{{ dmm | escapejs }}";
+         // jpb, DEBUG ONLY
+         // console.log(dmmdata);
+         // jpb, END OF DEBUG
+    </script>
+    
+
+{% endblock %}
+
+{% block searchcontent %}
+
+    <script>
+        // we should be able to do our data massaging here
+        var searchdata = "{{ search | escapejs }}";
+         // jpb, DEBUG ONLY
+         // console.log(searchdata);
+         // jpb, END OF DEBUG
+    </script>
+    
+         <script src="/static/js/allcharts.js"></script>
+
+ 
+ {% endblock %}   
