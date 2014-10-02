@@ -14,11 +14,32 @@
         <td colspan="3" style="padding-top: 10px; padding-bottom: 28px;">
           <h2 style="color: #363636; font-family: 'Helvetica Neue', Helvetica, sans-serif; font-weight: bold; font-size: 21px;">{% block clientname %}Big Daddy Dealership{% endblock %}</h2>
           <h2 style="color: #363636; font-family: 'Helvetica Neue', Helvetica, sans-serif; font-weight: bold; font-size: 21px;">Daily Hit List</h2>
-          <p style="color: #363636; font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; line-height: 26px;">
-           Click on the link below to view your dealership's Daily Hit List.
-          </p>
+          
+          <div style="margin-top: 30px;">
+          {% block leads %}
+    <table style="font-family:Arial;color:#e5e5e5;size:10px;text-align:left;padding-left:10px;padding-right:10px;" >
+        <tr>
+            <th><font style="color:#000000;font-size:12px">Shopper Intensity</font></th>
+            <th><font style="color:#000000;font-size:12px">Last Activity</font></th>
+            <th><font style="color:#000000;font-size:12px">Preferred Vehicle</font></th>
+        </tr>
+        
+            <tr style="background:{% cycle ' #efefef' '#ffffff' %}">
+                <td><font style="color:#000;font-size:12px">5</font></td>
+                <td><font style="color:#000;font-size:12px">9/1/2014</font></td>
+                <td><font style="color:#000;font-size:12px">Mazda Miata</font></td>
+            </tr>
+    
+       
+    </table>
+
+{% endblock %}
+          </div>
 
           <div style="margin-top: 30px;">
+<p style="color: #363636; font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; line-height: 26px;">
+          To receive more shopper details, visit your Daily Hit List detail by clicking the link below.
+          </p>
             {% block loginurl %}<a href="http://192.168.1.25:8000/accounts/login" style="font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; background: #2F8ED4; border: 2px solid #bbbbbb; color: #ffffff; display: inline-block; border-radius: 2px; width: 44%; padding: 16px 8px;">{% endblock %} 
               View Daily Hit List
             </a>

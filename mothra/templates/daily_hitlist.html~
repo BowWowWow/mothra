@@ -19,7 +19,28 @@
           </p>
 
           <div style="margin-top: 30px;">
-            <a href="http://192.168.1.25:8000/accounts/login" style="font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; background: #2F8ED4; border: 2px solid #bbbbbb; color: #ffffff; display: inline-block; border-radius: 2px; width: 44%; padding: 16px 8px;">
+          {% block leads %}
+    <table style="font-family:Arial;color:#e5e5e5;size:10px;text-align:left;padding-left:10px;padding-right:10px;" >
+        <tr>
+            <th><font style="color:#000000;font-size:12px">Shopper Intensity</font></th>
+            <th><font style="color:#000000;font-size:12px">Last Activity</font></th>
+            <th><font style="color:#000000;font-size:12px">Preferred Vehicle</font></th>
+        </tr>
+        
+            <tr style="background:{% cycle ' #efefef' '#ffffff' %}">
+                <td><font style="color:#000;font-size:12px">5</font></td>
+                <td><font style="color:#000;font-size:12px">9/1/2014</font></td>
+                <td><font style="color:#000;font-size:12px">Mazda Miata</font></td>
+            </tr>
+    
+       
+    </table>
+
+{% endblock %}
+          </div>
+
+          <div style="margin-top: 30px;">
+            {% block loginurl %}<a href="http://192.168.1.25:8000/accounts/login" style="font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; background: #2F8ED4; border: 2px solid #bbbbbb; color: #ffffff; display: inline-block; border-radius: 2px; width: 44%; padding: 16px 8px;">{% endblock %} 
               View Daily Hit List
             </a>
             <a href="http://vkc.visicogn.com" style="font-family: 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-align: center; text-decoration: none; background: #ffffff; border: 2px solid #bbbbbb; color: #363636; display: inline-block; border-radius: 2px; width: 44%; padding: 16px 8px; float: right;">

@@ -10,6 +10,27 @@
 
 {% endblock %}
 
+{% block leads %}
+
+    <table width="394" height="180" style="font-family:Arial;color:#e5e5e5;size:10px;text-align:left;padding-left:10px;padding-right:10px;" >
+        <tr>
+            <th><font style="color:#000000;font-size:12px">Shopper Intensity</font></th>
+            <th><font style="color:#000000;font-size:12px">Last Activity</font></th>
+            <th><font style="color:#000000;font-size:12px">Preferred Vehicle</font></th>
+        </tr>
+        
+        {% for l in dhl %}
+            <tr style="background:{% cycle ' #efefef' '#ffffff' %}">
+                <td><font style="color:#000;font-size:12px">{{ l.shopper_intensity }}</font></td>
+                <td><font style="color:#000;font-size:12px">{{ l.shopper_last_activity }}</font></td>
+                <td><font style="color:#000;font-size:12px">{{ l.shopper_preferred_vehicle }}</font></td>
+            </tr>
+       {% endfor %}
+       
+    </table>
+
+{% endblock %}
+
 
 
 {% block city %}

@@ -142,6 +142,10 @@ class DealerDailyHitListAdmin(admin.ModelAdmin):
         for user in dealerusers:
             subject = 'Dataium Daily Hit List' 
             dhldealer = user.userprofile.dealer
+            # get the list of dhl leads for presentation in the email
+            dhlsite = DealerSite.objects.filter(dealer = dhldealer)
+            dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_last_activity')[:10]
+            # since we are going to the cloud, build the right link with host
             loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
             to = []
             to = user.email.split(',')
@@ -149,6 +153,7 @@ class DealerDailyHitListAdmin(admin.ModelAdmin):
             ctx = {
                 'dealer':dhldealer,
                 'loginpurl':loginpurl,
+                'dhl':dhl,
             }
 
             message = get_template('client_dhlemail.html').render(Context(ctx))
@@ -156,11 +161,8 @@ class DealerDailyHitListAdmin(admin.ModelAdmin):
             msg.content_subtype = 'html'
             msg.send()
 
-
- 
-
                 # END OF SEND EMAILS
-        self.message_user(request,"Market Reports have been sent.")
+        self.message_user(request,"Daily Hit Lists have been sent.")
         return HttpResponseRedirect(request.get_full_path())
 
             
