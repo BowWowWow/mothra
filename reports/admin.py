@@ -124,8 +124,11 @@ class MarketReportYearMonthAdmin(admin.ModelAdmin):
     actions = ['make_marketreport','send_marketemail']
     send_marketemail.short_description = "Send Market Report"
 
+# start of DHL send for selected user in User object
 
-# start of DHL sends
+
+
+# start of DHL sends for DailyHitList Object
 class DealerDailyHitListAdmin(admin.ModelAdmin):
     # inlines = [
     #      DealerDailyHitListInline,
@@ -159,7 +162,7 @@ class DealerDailyHitListAdmin(admin.ModelAdmin):
             message = get_template('client_dhlemail.html').render(Context(ctx))
             msg = EmailMessage(subject,message,to=to,from_email=from_email)
             msg.content_subtype = 'html'
-            msg.send()
+            # msg.send()
 
                 # END OF SEND EMAILS
         self.message_user(request,"Daily Hit Lists have been sent.")
@@ -185,7 +188,61 @@ class UserProfileInline(admin.StackedInline):
 
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline,)
+    actions = ['send_dhluseremail']
 
+    def send_dhluseremail(self,request,queryset):
+        print 'in send_dhluseremail'
+        print queryset
+	users = queryset
+        # get the list of daily hit list subscribers
+        for user in queryset:
+            # dealeruser = users.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N')
+            print user
+            validusercount = 0
+            invalidusercount = 0
+            try:
+                dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N',username=user)
+
+                subject = 'Dataium Daily Hit List' 
+                dhldealer = user.userprofile.dealer
+            # get the list of dhl leads for presentation in the email
+                dhlsite = DealerSite.objects.filter(dealer = dhldealer)
+                dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_last_activity')[:10]
+                print dhlsite
+                print dhl
+            # since we are going to the cloud, build the right link with host
+                loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
+                to = []
+                to = user.email.split(',')
+                from_email = 'no-reply@dataium.com'
+                ctx = {
+                    'dealer':dhldealer,
+                    'loginpurl':loginpurl,
+                    'dhl':dhl,
+                }
+
+                message = get_template('client_dhlemail.html').render(Context(ctx))
+                msg = EmailMessage(subject,message,to=to,from_email=from_email)
+                msg.content_subtype = 'html'
+                # msg.send()
+                validusercount = validusercount +1
+
+                # END OF SEND EMAILS
+                
+
+            except:
+                print "user is inactive or is not subscribed"
+                invalidusercount = invalidusercount + 1
+
+        
+        self.message_user(request,"%s Daily Hit Lists have been sent." % validusercount)
+
+
+
+
+    send_dhluseremail.short_description = "Send Daily Hit List To Selected Users"
+
+# end of UserAdmin
 
 admin.site.register(Dealer,DealerAdmin)
 admin.site.register(DataiumDMA,DataiumDMAAdmin)
