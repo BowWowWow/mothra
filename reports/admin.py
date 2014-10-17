@@ -17,7 +17,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.admin import User
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerMarketReport,UserProfile,DealerDailyHitList
+from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerMarketReport,UserProfile,DealerDailyHitList,DealerGroup
 
 class DataiumDMAAdmin(admin.ModelAdmin):
     list_display = ('dataiumdmaid','dmaname')
@@ -27,6 +27,9 @@ class DealerSiteAdmin(admin.ModelAdmin):
 
 class DealerAdmin(admin.ModelAdmin):
     list_display = ('dealername','dealercity','dealerstate','dealerinactive')
+
+class DealerGroupAdmin(admin.ModelAdmin):
+    list_display = ('dealergroupname','dealergroupcity','dealergroupstate','dealergroupinactive')
 
 
 class MarketReportInline(admin.TabularInline):
@@ -249,6 +252,7 @@ admin.site.register(DataiumDMA,DataiumDMAAdmin)
 admin.site.register(DealerSite,DealerSiteAdmin)
 admin.site.register(MarketReportYearMonth,MarketReportYearMonthAdmin)
 admin.site.register(DealerMarketReport)
+admin.site.register(DealerGroup,DealerGroupAdmin)
 admin.site.unregister(User)
 admin.site.register(User,UserAdmin)
 admin.site.register(DealerDailyHitList,DealerDailyHitListAdmin)

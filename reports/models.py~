@@ -21,12 +21,52 @@ class DataiumDMA(models.Model):
 
 
 
+
+class DealerGroup(models.Model):
+   
+   AUTO_GROUP = "Auto Group"
+   ADVERTISING_GROUP = "Advertising Group"
+   OEM_GROUP = "OEM Regional Group"
+   MARKETING_AGENCY = "Marketing Agency"
+   OTHER = "Other"
+   
+   DEALER_GROUP_TYPE_CHOICES = (
+       (AUTO_GROUP,'Auto Group'),
+       (ADVERTISING_GROUP,'Advertising Group'),
+       (OEM_GROUP,'OEM Regional Group'),
+       (MARKETING_AGENCY,'Marketing Agency'),
+       (OTHER,'Other'),
+   )
+
+
+
+   dealergroupname = models.CharField(verbose_name='Dealer Group Name',max_length=128)
+   dealergroupcity = models.CharField(verbose_name='Dealer Group City',max_length=50,blank=True)
+   dealergroupstate = models.CharField(verbose_name='Dealer Group State',max_length=20,blank=True)
+   dealergrouptype = models.CharField(choices=DEALER_GROUP_TYPE_CHOICES,default=AUTO_GROUP,verbose_name='Dealer Group Type', max_length=30)
+   dealergroupcontactname = models.CharField(verbose_name='Primary Contact',max_length=70,null=True,blank=True)
+   dataiumclientid = models.IntegerField(verbose_name='Dataium Client ID',null=True,blank=True)
+   dealergroupinactive = models.CharField(verbose_name='Dealer Group Inactive',max_length=3,null=True,default='N')
+   dealergroupdeleted = models.CharField(verbose_name='Dealer Group Deleted',max_length=3,null=True,default='N')
+   dealergroupcreatedate = models.DateTimeField(verbose_name='Dealer Group Created On',auto_now_add=True,null=True)
+   dealergroupupdatedate = models.DateTimeField(verbose_name='Dealer Group Updated On',auto_now=True,null=True)
+
+   class Meta:
+        verbose_name = "Dealer Group"
+
+   def __unicode__(self):
+       return ''.join([self.dealergroupname,' ',self.dealergroupcity,', ',self.dealergroupstate,])
+
+
+
+
 class Dealer(models.Model):
    dealername = models.CharField(verbose_name='Dealer Name',max_length=128)
    dealercity = models.CharField(verbose_name='Dealer City',max_length=50)
    dealerstate = models.CharField(verbose_name='Dealer State',max_length=20)
    dealermainwebsite = models.CharField(verbose_name='Dealer Main Site',max_length=50)
    dma = models.ForeignKey(DataiumDMA, related_name='DMA')
+   dealergroup = models.ForeignKey(DealerGroup, related_name="Dealer Group",blank=True,null=True)
    dealerdma = models.CharField(verbose_name='DMA Description',max_length=50)
    dealerlat = models.DecimalField(verbose_name = 'Dealer Latitude',max_digits=10,decimal_places=6,null=True)
    dealerlong = models.DecimalField(verbose_name='Dealer Longitude',max_digits=10,decimal_places=6,null=True)
@@ -250,8 +290,7 @@ class DealerDailyHitList(models.Model):
        verbose_name="Daily Hit List"
 
    def __unicode__(self):
-       return ''.join([self.dealersite,' ',self.full_name,' ',self.shopper_email,])
-
+       return ''.join([self.full_name,' ',self.shopper_email,])
 
 
 
