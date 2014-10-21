@@ -41,9 +41,9 @@ class DealerGroup(models.Model):
 
 
    dealergroupname = models.CharField(verbose_name='Dealer Group Name',max_length=128)
-   dealergroupcity = models.CharField(verbose_name='Dealer Group City',max_length=50,blank=True)
-   dealergroupstate = models.CharField(verbose_name='Dealer Group State',max_length=20,blank=True)
-   dealergrouptype = models.CharField(choices=DEALER_GROUP_TYPE_CHOICES,default=AUTO_GROUP,verbose_name='Dealer Group Type', max_length=30)
+   dealergroupcity = models.CharField(verbose_name='Dealer Group City',max_length=50,null=True,blank=True)
+   dealergroupstate = models.CharField(verbose_name='Dealer Group State',max_length=20,null=True,blank=True)
+   dealergrouptype = models.CharField(choices=DEALER_GROUP_TYPE_CHOICES,default=AUTO_GROUP,verbose_name='Dealer Group Type', max_length=30,blank=True,null=True)
    dealergroupcontactname = models.CharField(verbose_name='Primary Contact',max_length=70,null=True,blank=True)
    dataiumclientid = models.IntegerField(verbose_name='Dataium Client ID',null=True,blank=True)
    dealergroupinactive = models.CharField(verbose_name='Dealer Group Inactive',max_length=3,null=True,blank=True,default='N')
@@ -67,6 +67,7 @@ class Dealer(models.Model):
    dealermainwebsite = models.CharField(verbose_name='Dealer Main Site',max_length=50)
    dma = models.ForeignKey(DataiumDMA, related_name='DMA')
    dealergroup = models.ForeignKey(DealerGroup, related_name="Dealer Group",blank=True,null=True)
+   dataiumsiteid = models.IntegerField(verbose_name='Dataium Site ID',null=True,blank=True)
    dealerdma = models.CharField(verbose_name='DMA Description',max_length=50)
    dealerlat = models.DecimalField(verbose_name = 'Dealer Latitude',max_digits=10,decimal_places=6,null=True)
    dealerlong = models.DecimalField(verbose_name='Dealer Longitude',max_digits=10,decimal_places=6,null=True)
@@ -218,7 +219,8 @@ class MarketReportYearMonth(models.Model):
 
 class UserProfile(models.Model):
      user = models.OneToOneField(User,unique=True)
-     dealer = models.ForeignKey(Dealer,null=True)
+     dealer = models.ForeignKey(Dealer,null=True,blank=True)
+     dealergroup = models.ForeignKey(DealerGroup,null=True,blank=True)
      bio = models.CharField(verbose_name='About Me',null=True,max_length=200,blank=True)
      position = models.CharField(verbose_name='My Position',null=True,max_length=50,blank=True)
      has_optedout = models.BooleanField(verbose_name='Opt Out of Everything',default=False)
