@@ -41,11 +41,11 @@ class DealerGroup(models.Model):
 
 
    dealergroupname = models.CharField(verbose_name='Dealer Group Name',max_length=128)
-   dealergroupcity = models.CharField(verbose_name='Dealer Group City',max_length=50,null=True)
-   dealergroupstate = models.CharField(verbose_name='Dealer Group State',max_length=20,null=True)
+   dealergroupcity = models.CharField(verbose_name='Dealer Group City',max_length=50,null=True,blank=True)
+   dealergroupstate = models.CharField(verbose_name='Dealer Group State',max_length=20,null=True,blank=True)
    dealergrouptype = models.CharField(choices=DEALER_GROUP_TYPE_CHOICES,default=AUTO_GROUP,verbose_name='Dealer Group Type', max_length=30,blank=True,null=True)
-   dealergroupcontactname = models.CharField(verbose_name='Primary Contact',max_length=70,null=True)
-   dataiumclientid = models.IntegerField(verbose_name='Dataium Client ID',null=True)
+   dealergroupcontactname = models.CharField(verbose_name='Primary Contact',max_length=70,null=True,blank=True)
+   dataiumclientid = models.IntegerField(verbose_name='Dataium Client ID',null=True,blank=True)
    dealergroupinactive = models.CharField(verbose_name='Dealer Group Inactive',max_length=3,null=True,blank=True,default='N')
    dealergroupdeleted = models.CharField(verbose_name='Dealer Group Deleted',max_length=3,null=True,blank=True,default='N')
    dealergroupcreatedate = models.DateTimeField(verbose_name='Dealer Group Created On',auto_now_add=True,null=True)
