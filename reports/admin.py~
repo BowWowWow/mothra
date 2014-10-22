@@ -21,15 +21,19 @@ from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerM
 
 class DataiumDMAAdmin(admin.ModelAdmin):
     list_display = ('dataiumdmaid','dmaname')
+    search_fields = ['dmaname']
 
 class DealerSiteAdmin(admin.ModelAdmin):
     list_display = ('dealer','dataiumsiteid','dataiumsitedescription')
+    search_fields = ['dealer__dealername','dataiumsitedescription','dataiumsiteid']
 
 class DealerAdmin(admin.ModelAdmin):
-    list_display = ('dealername','dataiumsiteid','dealercity','dealerstate','dealerinactive')
+    list_display = ('dealername','dataiumsiteid','dealergroup','dealercity','dealerstate','dealerinactive')
+    search_fields = ['dealername','dealergroup__dealergroupname','dealercity','dealerstate']
 
 class DealerGroupAdmin(admin.ModelAdmin):
     list_display = ('dealergroupname','dataiumclientid','dealergroupcity','dealergroupstate','dealergroupinactive')
+    search_fields = ['dealergroupname','dealergroupcity','dealergroupstate']
 
 
 class MarketReportInline(admin.TabularInline):
@@ -193,6 +197,8 @@ class UserAdmin(UserAdmin):
     inlines = (UserProfileInline,)
     actions = ['send_dhluseremail']
 
+    # JPB, TO-DO:  Add logic for dealer group sends
+
     def send_dhluseremail(self,request,queryset):
         print 'in send_dhluseremail'
         print queryset
@@ -210,7 +216,7 @@ class UserAdmin(UserAdmin):
                 dhldealer = user.userprofile.dealer
             # get the list of dhl leads for presentation in the email
                 dhlsite = DealerSite.objects.filter(dealer = dhldealer)
-                dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_last_activity')[:10]
+                dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5]
                 print dhlsite
                 print dhl
             # since we are going to the cloud, build the right link with host
@@ -227,7 +233,7 @@ class UserAdmin(UserAdmin):
                 message = get_template('client_dhlemail.html').render(Context(ctx))
                 msg = EmailMessage(subject,message,to=to,from_email=from_email)
                 msg.content_subtype = 'html'
-                # msg.send()
+                msg.send()
                 validusercount = validusercount +1
 
                 # END OF SEND EMAILS
