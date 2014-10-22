@@ -26,7 +26,7 @@ class DealerSiteAdmin(admin.ModelAdmin):
     list_display = ('dealer','dataiumsiteid','dataiumsitedescription')
 
 class DealerAdmin(admin.ModelAdmin):
-    list_display = ('dealername','dataiumsiteid','dealercity','dealerstate','dealerinactive')
+    list_display = ('dealername','dataiumsiteid','dealergroup','dealercity','dealerstate','dealerinactive')
 
 class DealerGroupAdmin(admin.ModelAdmin):
     list_display = ('dealergroupname','dataiumclientid','dealergroupcity','dealergroupstate','dealergroupinactive')

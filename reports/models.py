@@ -55,8 +55,8 @@ class DealerGroup(models.Model):
         verbose_name = "Dealer Group"
 
    def __unicode__(self):
-       return ''.join([self.dealergroupname,' ',self.dealergroupcity,', ',self.dealergroupstate,])
-
+       # return ''.join([self.dealergroupname,' ',str(self.dataiumclientid),])
+       return self.dealergroupname
 
 
 
@@ -80,8 +80,8 @@ class Dealer(models.Model):
         verbose_name = "Dealer"
 
    def __unicode__(self):
-       return ''.join([self.dealername,' ',self.dealercity,', ',self.dealerstate,])
-
+       # return ''.join([self.dealername,' ',self.dealercity,', ',self.dealerstate,])
+       return self.dealername
 
 
 class DealerSite(models.Model):
@@ -274,6 +274,7 @@ class DealerMarketReport(models.Model):
 # jpb, 9/26/2014 added class for market report
 class DealerDailyHitList(models.Model):
    dealersite = models.ForeignKey(DealerSite)
+   dataiumsiteid = models.IntegerField(default=0,null=True,verbose_name='Dataium Site ID')
    full_name=models.CharField(max_length=100,verbose_name='Shopper Full Name',null=True,blank=True)
    shopper_email=models.CharField(max_length=100,verbose_name='Shopper Email',null=True,blank=True)
    shopper_phone=models.CharField(max_length=20,verbose_name='Shopper Phone',null=True,blank=True)

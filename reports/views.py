@@ -26,6 +26,9 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.views import password_reset
 
+# jpb, 10/22/2014, added CSV library for lead downloads
+import csv
+
 
 # Create your views here.
 
@@ -48,25 +51,63 @@ def forgot_password(request):
 
 # jpb, 2014-09-30, added dhl view
 
-# TO-DO, add authentication requirement
-
+# jpb, 2014-10-21, TO-DO:  Add logic to determine if user is a group user or dealer user.
 @login_required
 def user_dhl(request):
 
     user_id = request.user.id
-
+    print user_id
+    
+    # JPB, NEED TO CHECK THE dealeruser object here....not in the exception loop
     try:
         dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N')
+        print 'executing standalone dealer'
+
         dhldealer = dealeruser.userprofile.dealer        
         dhldealersite = DealerSite.objects.get(dealer = dhldealer)
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite)
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('-shopper_intensity')
+    except:
+        dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N')
+        print 'this user is a member of a group!'
+        # dealergroup = dealeruser.userprofile.dealergroup
+        dhldealers = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealers).order_by('-shopper_intensity')
 
-    except ObjectDoesNotExist:
-        print 'User id requested does not exist or is not subscribed to dhl'
-        raise Http404
+      
 
     return render_to_response('userdhl.html',locals(),context_instance=RequestContext(request))  
 
+# jpb, 2014-10-22, added view to download file
+
+@login_required
+def dhl_file(request):
+
+    user_id = request.user.id
+    print user_id
+    
+    # JPB, NEED TO CHECK THE dealeruser object here....not in the exception loop
+    try:
+        dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N')
+        print 'executing standalone dealer'
+
+        dhldealer = dealeruser.userprofile.dealer        
+        dhldealersite = DealerSite.objects.get(dealer = dhldealer)
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('-shopper_intensity')
+    except:
+        dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N')
+        print 'this user is a member of a group!'
+        # dealergroup = dealeruser.userprofile.dealergroup
+        dhldealers = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealers).order_by('-shopper_intensity')
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="dhldownload.csv"'
+    writer = csv.writer(response,quoting=csv.QUOTE_NONNUMERIC)
+    writer.writerow(['Shopper Name','Shopper EMail','Shopper Phone','Shopper Intensity','Shopper First Activity','Shopper Last Lead Date','Shopper Last Activity','Shopper Last Site','Shopper Preferred Vehicle'])
+    for row in dhlleads:
+        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,row.shopper_first_activity,row.shopper_last_lead_date, row.shopper_last_activity,row.shopper_last_site,row.shopper_preferred_vehicle])
+
+    return response 
 
 
 

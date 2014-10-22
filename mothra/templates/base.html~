@@ -18,7 +18,7 @@
 
   <body>
 
-
+{% if user.is_authenticated %}
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -72,6 +72,9 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+{% endif %}
+
     <div class="container">
         <div class="pull-right">
             {% if user.is_authenticated %}

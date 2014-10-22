@@ -55,23 +55,23 @@ class DealerGroup(models.Model):
         verbose_name = "Dealer Group"
 
    def __unicode__(self):
-       return ''.join([self.dealergroupname,' ',self.dealergroupcity,', ',self.dealergroupstate,])
-
+       # return ''.join([self.dealergroupname,' ',str(self.dataiumclientid),])
+       return self.dealergroupname
 
 
 
 class Dealer(models.Model):
    dealername = models.CharField(verbose_name='Dealer Name',max_length=128)
-   dealercity = models.CharField(verbose_name='Dealer City',max_length=50)
-   dealerstate = models.CharField(verbose_name='Dealer State',max_length=20)
-   dealermainwebsite = models.CharField(verbose_name='Dealer Main Site',max_length=50)
-   dma = models.ForeignKey(DataiumDMA, related_name='DMA')
+   dealercity = models.CharField(verbose_name='Dealer City',max_length=50,blank=True,null=True)
+   dealerstate = models.CharField(verbose_name='Dealer State',max_length=20,blank=True,null=True)
+   dealermainwebsite = models.CharField(verbose_name='Dealer Main Site',max_length=50,blank=True,null=True)
+   dma = models.ForeignKey(DataiumDMA, related_name='DMA',blank=True,null=True)
    dealergroup = models.ForeignKey(DealerGroup, related_name="Dealer Group",blank=True,null=True)
    dataiumsiteid = models.IntegerField(verbose_name='Dataium Site ID',null=True,blank=True)
-   dealerdma = models.CharField(verbose_name='DMA Description',max_length=50)
-   dealerlat = models.DecimalField(verbose_name = 'Dealer Latitude',max_digits=10,decimal_places=6,null=True)
-   dealerlong = models.DecimalField(verbose_name='Dealer Longitude',max_digits=10,decimal_places=6,null=True)
-   dealerinactive = models.CharField(verbose_name='Dealer Inactive',max_length=3,null=True,default='N')
+   dealerdma = models.CharField(verbose_name='DMA Description',max_length=50,blank=True,null=True)
+   dealerlat = models.DecimalField(verbose_name = 'Dealer Latitude',max_digits=10,decimal_places=6,null=True,blank=True)
+   dealerlong = models.DecimalField(verbose_name='Dealer Longitude',max_digits=10,decimal_places=6,null=True,blank=True)
+   dealerinactive = models.CharField(verbose_name='Dealer Inactive',max_length=3,null=True,default='N',blank=True)
    dealerdeleted = models.CharField(verbose_name='Dealer Deleted',max_length=3,null=True,default='N')
    dealercreatedate = models.DateTimeField(verbose_name='Dealer Created On',auto_now_add=True,null=True)
    dealerupdatedate = models.DateTimeField(verbose_name='Dealer Updated On',auto_now=True,null=True)
@@ -80,14 +80,14 @@ class Dealer(models.Model):
         verbose_name = "Dealer"
 
    def __unicode__(self):
-       return ''.join([self.dealername,' ',self.dealercity,', ',self.dealerstate,])
-
+       # return ''.join([self.dealername,' ',self.dealercity,', ',self.dealerstate,])
+       return self.dealername
 
 
 class DealerSite(models.Model):
    dealer = models.ForeignKey(Dealer)
    dataiumsiteid = models.IntegerField(verbose_name='Dataium Site ID',default=0,null=True)
-   dataiumsitedescription = models.CharField(verbose_name='Site Description (URL)',max_length=128,null=True)
+   dataiumsitedescription = models.CharField(verbose_name='Site Description (URL)',max_length=128,null=True,blank=True)
    dealersiteinactive = models.CharField(verbose_name='Dealer Site Inactive',max_length=3,null=True,default='N')
    dealersitedeleted = models.CharField(verbose_name='Dealer Site Deleted',max_length=3,null=True,default='N')
    dealersitecreatedate = models.DateTimeField(verbose_name='Dealer Site Created On',auto_now_add=True,null=True)

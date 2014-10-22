@@ -78,7 +78,7 @@
     <div class="container">
         <div class="pull-right">
             {% if user.is_authenticated %}
-                <small>Hi {{ user.username }}! | <a href="{% url 'logout' %}?next=/accounts/logout">logout</a></small>
+                <small>Hi {{ user.first_name }}! | <a href="{% url 'logout' %}?next=/accounts/logout">logout</a></small>
             {% else %}
                 <small><a href="{% url 'login' %}">login</a></small>
             {% endif %}
@@ -89,6 +89,7 @@
             </div>
           
           <h1 id="navbar">Daily Hit List</h1>
+          <!-- TO-DO:  Add check for dealer vs. dealer group?  -->
           <h3>Dealer:&nbsp;&nbsp;{{dhldealer.dealername}}</h3>
 
               <table class="table table-striped table-hover ">

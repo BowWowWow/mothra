@@ -55,7 +55,7 @@
         <div class="page-header">
           {% if user.is_authenticated %}
             <div class="pull-right btn-group">
-<a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Download List</a>
+<a href="{% url 'reports:dhl_file' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Download List</a>
            
             </div>
           
