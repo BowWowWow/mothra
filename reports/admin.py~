@@ -193,61 +193,87 @@ class UserProfileInline(admin.StackedInline):
     can_delete = False
     verbose_name_plural = 'user profile'
 
-class UserAdmin(UserAdmin):
+class MyUserAdmin(UserAdmin):
     inlines = (UserProfileInline,)
     actions = ['send_dhluseremail']
 
-    # JPB, TO-DO:  Add logic for dealer group sends
+    # JPB, 2014-10-22, TO-DO:  Add logic for dealer group sends
 
     def send_dhluseremail(self,request,queryset):
         print 'in send_dhluseremail'
-        print queryset
 	users = queryset
         # get the list of daily hit list subscribers
+        validusercount = 0
+        invalidusercount = 0
         for user in queryset:
-            # dealeruser = users.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N')
-            print user
-            validusercount = 0
-            invalidusercount = 0
-            try:
-                dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N',username=user)
 
-                subject = 'Dataium Daily Hit List' 
-                dhldealer = user.userprofile.dealer
+            if user.userprofile.dealer:
+                print "user is dealer"
+                try:
+                    dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N',username=user)
+                    subject = 'Dataium Daily Hit List' 
+                    dhldealer = user.userprofile.dealer
             # get the list of dhl leads for presentation in the email
-                dhlsite = DealerSite.objects.filter(dealer = dhldealer)
-                dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5]
-                print dhlsite
-                print dhl
+                    dhlsite = DealerSite.objects.filter(dealer = dhldealer)
+                    dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5]
             # since we are going to the cloud, build the right link with host
-                loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
-                to = []
-                to = user.email.split(',')
-                from_email = 'no-reply@dataium.com'
-                ctx = {
-                    'dealer':dhldealer,
-                    'loginpurl':loginpurl,
-                    'dhl':dhl,
-                }
+                    loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
+                    to = []
+                    to = user.email.split(',')
+                    from_email = 'no-reply@dataium.com'
+                    ctx = {
+                        'dealer':dhldealer,
+                        'loginpurl':loginpurl,
+                        'dhl':dhl,
+                    }
 
-                message = get_template('client_dhlemail.html').render(Context(ctx))
-                msg = EmailMessage(subject,message,to=to,from_email=from_email)
-                msg.content_subtype = 'html'
-                msg.send()
-                validusercount = validusercount +1
+                    message = get_template('client_dhlemail.html').render(Context(ctx))
+                    msg = EmailMessage(subject,message,to=to,from_email=from_email)
+                    msg.content_subtype = 'html'
+                    msg.send()
+                    validusercount = validusercount +1
 
                 # END OF SEND EMAILS
+
+                except:
+                    print "user is inactive or is not subscribed"
+                    invalidusercount = invalidusercount + 1
+
+
+            
+            if user.userprofile.dealergroup:
+                print "user is group"
+                try:
+                    dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N',username=user)
+                    
+                    subject = 'Dataium Daily Hit List' 
+                    dhldealergroup = user.userprofile.dealergroup
+            # get the list of dhl leads for presentation in the email
+                    dhldealers = Dealer.objects.filter(dealergroup = dhldealergroup)
+                    dhlsite = DealerSite.objects.filter(dealer = dhldealers)
+                    dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5]  
+            # since we are going to the cloud, build the right link with host
+                    loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
+                    to = []
+                    to = user.email.split(',')
+                    from_email = 'no-reply@dataium.com'
+                    ctx = {
+                        'dealer':dhldealers,
+                        'loginpurl':loginpurl,
+                        'dhl':dhl,
+                    }
+
+                    message = get_template('client_dhlemail.html').render(Context(ctx))
+                    msg = EmailMessage(subject,message,to=to,from_email=from_email)
+                    msg.content_subtype = 'html'
+                    msg.send()
+                    validusercount = validusercount +1
                 
+                except:
+                    print "user is inactive or is not subscribed"
+                    invalidusercount = invalidusercount + 1
 
-            except:
-                print "user is inactive or is not subscribed"
-                invalidusercount = invalidusercount + 1
-
-        
         self.message_user(request,"%s Daily Hit Lists have been sent." % validusercount)
-
-
-
 
     send_dhluseremail.short_description = "Send Daily Hit List To Selected Users"
 
@@ -260,5 +286,5 @@ admin.site.register(MarketReportYearMonth,MarketReportYearMonthAdmin)
 admin.site.register(DealerMarketReport)
 admin.site.register(DealerGroup,DealerGroupAdmin)
 admin.site.unregister(User)
-admin.site.register(User,UserAdmin)
+admin.site.register(User,MyUserAdmin)
 admin.site.register(DealerDailyHitList,DealerDailyHitListAdmin)
