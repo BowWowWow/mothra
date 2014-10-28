@@ -230,6 +230,7 @@ class MyUserAdmin(UserAdmin):
                     message = get_template('client_dhlemail.html').render(Context(ctx))
                     msg = EmailMessage(subject,message,to=to,from_email=from_email)
                     msg.content_subtype = 'html'
+                    print "right before msg.send"
                     msg.send()
                     validusercount = validusercount +1
 
@@ -266,6 +267,7 @@ class MyUserAdmin(UserAdmin):
                     message = get_template('client_dhlemail.html').render(Context(ctx))
                     msg = EmailMessage(subject,message,to=to,from_email=from_email)
                     msg.content_subtype = 'html'
+                    print "right before msg.send"
                     msg.send()
                     validusercount = validusercount +1
                 
