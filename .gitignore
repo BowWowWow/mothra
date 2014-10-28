@@ -2,3 +2,4 @@
 *.sqlite3
 /mothra/*.sqlite3
 staticfiles
+.env

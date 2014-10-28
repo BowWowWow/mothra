@@ -41,8 +41,10 @@ TEMPLATE_DIRS = (
 # jpb, 8/28, added EMAIL setup
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mandrillapp.com'
-EMAIL_HOST_USER = 'jburns@dataium.com'
-EMAIL_HOST_PASSWORD = 'ESYomNVo5D661rMsbkz8-w'
+# EMAIL_HOST_USER = 'jburns@dataium.com'
+# EMAIL_HOST_PASSWORD = 'ESYomNVo5D661rMsbkz8-w'
+EMAIL_HOST_USER = os.environ.get('MANDRILL_USERNAME')
+EMAIL_HOST_PASSWORD = os.environ.get('MANDRILL_APIKEY')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'no-reply@dataium.com'
 
@@ -152,6 +154,7 @@ STATICFILES_DIRS = (
 
 if os.environ.get('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.config()
+
 
 # Honor the 'X-Forwareded-Proto' header for request.is_secure()
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
