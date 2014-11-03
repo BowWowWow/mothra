@@ -22,8 +22,7 @@ PROJECT_PATH=os.path.dirname(os.path.abspath(__file__))
 #  Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2z2o_q3p@a0w6rtvf7+-zolb87f8(6&u=5fof($+m@cpy2-3np'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,8 +40,7 @@ TEMPLATE_DIRS = (
 # jpb, 8/28, added EMAIL setup
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mandrillapp.com'
-# EMAIL_HOST_USER = 'jburns@dataium.com'
-# EMAIL_HOST_PASSWORD = 'ESYomNVo5D661rMsbkz8-w'
+
 EMAIL_HOST_USER = os.environ.get('MANDRILL_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('MANDRILL_APIKEY')
 EMAIL_PORT = 587
@@ -109,8 +107,8 @@ DATABASES = {
 
 	'ENGINE': 'django.db.backends.mysql',
 	'NAME': 'mothra',
-	'USER': 'root',
-	'PASSWORD': 'Voyager26!',
+	'USER': '<username>',
+	'PASSWORD': '<password>',
 	'HOST': 'localhost',
 	'PORT': '3306',
         'STORAGE_ENGINE':'MyISAM',
