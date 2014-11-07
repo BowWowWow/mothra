@@ -5,8 +5,11 @@
 
 
 {% block clientname %} 
-
-       {{dealer.dealername}}
+    {% if dealer.dealername %}
+       	{{dealer.dealername}}
+    {% else %}
+        {{dealer.dealergroupname}}
+    {% endif %}
 
 {% endblock %}
 

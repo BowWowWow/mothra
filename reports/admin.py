@@ -249,17 +249,21 @@ class MyUserAdmin(UserAdmin):
                     
                     subject = 'Dataium Daily Hit List' 
                     dhldealergroup = user.userprofile.dealergroup
+                    
             # get the list of dhl leads for presentation in the email
                     dhldealers = Dealer.objects.filter(dealergroup = dhldealergroup)
                     dhlsite = DealerSite.objects.filter(dealer = dhldealers)
-                    dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5]  
+                   
+                    dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5] 
+                                  
             # since we are going to the cloud, build the right link with host
                     loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
-                    to = []
+                    print loginpurl
+		    to = []
                     to = user.email.split(',')
                     from_email = 'no-reply@dataium.com'
                     ctx = {
-                        'dealer':dhldealers,
+                        'dealer':dhldealergroup,
                         'loginpurl':loginpurl,
                         'dhl':dhl,
                     }

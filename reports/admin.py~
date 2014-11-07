@@ -230,6 +230,7 @@ class MyUserAdmin(UserAdmin):
                     message = get_template('client_dhlemail.html').render(Context(ctx))
                     msg = EmailMessage(subject,message,to=to,from_email=from_email)
                     msg.content_subtype = 'html'
+                    print "right before msg.send"
                     msg.send()
                     validusercount = validusercount +1
 
@@ -248,17 +249,20 @@ class MyUserAdmin(UserAdmin):
                     
                     subject = 'Dataium Daily Hit List' 
                     dhldealergroup = user.userprofile.dealergroup
+                    
             # get the list of dhl leads for presentation in the email
                     dhldealers = Dealer.objects.filter(dealergroup = dhldealergroup)
                     dhlsite = DealerSite.objects.filter(dealer = dhldealers)
-                    dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5]  
+                   
+                    dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_intensity')[:5] 
+                    print dhl               
             # since we are going to the cloud, build the right link with host
                     loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
                     to = []
                     to = user.email.split(',')
                     from_email = 'no-reply@dataium.com'
                     ctx = {
-                        'dealer':dhldealers,
+                        'dealer':dhldealergroup,
                         'loginpurl':loginpurl,
                         'dhl':dhl,
                     }
@@ -266,6 +270,7 @@ class MyUserAdmin(UserAdmin):
                     message = get_template('client_dhlemail.html').render(Context(ctx))
                     msg = EmailMessage(subject,message,to=to,from_email=from_email)
                     msg.content_subtype = 'html'
+                    print "right before msg.send"
                     msg.send()
                     validusercount = validusercount +1
                 
