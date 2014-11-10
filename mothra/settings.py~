@@ -107,8 +107,8 @@ DATABASES = {
 
 	'ENGINE': 'django.db.backends.mysql',
 	'NAME': 'mothra',
-	'USER': 'root',
-	'PASSWORD': 'Voyager26!',
+	'USER': '<user>',
+	'PASSWORD': '<password>',
 	'HOST': 'localhost',
 	'PORT': '3306',
         'STORAGE_ENGINE':'MyISAM',
