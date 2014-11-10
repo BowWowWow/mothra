@@ -43,7 +43,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.mandrillapp.com'
 EMAIL_HOST_USER = os.environ.get('MANDRILL_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('MANDRILL_APIKEY')
-
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'no-reply@dataium.com'
 # print EMAIL_HOST_USER
