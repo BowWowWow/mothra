@@ -69,10 +69,11 @@ def user_dhl(request):
     except:
         dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N')
         print 'this user is a member of a group!'
-        # dealergroup = dealeruser.userprofile.dealergroup
-        dhldealers = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealers).order_by('-shopper_intensity')
-
+        dealergroup = dealeruser.userprofile.dealergroup
+        # print dealergroup
+        dhldealer = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealer).order_by('-shopper_intensity')
+        print locals()
       
 
     return render_to_response('userdhl.html',locals(),context_instance=RequestContext(request))  
