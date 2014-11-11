@@ -23,7 +23,7 @@ PROJECT_PATH=os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = <insert secret key here>
+SECRET_KEY = '2z2o_q3p@a0w6rtvf7+-zolb87f8(6&u=5fof($+m@cpy2-3np'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -45,8 +45,7 @@ EMAIL_HOST_USER = os.environ.get('MANDRILL_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('MANDRILL_APIKEY')
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'no-reply@dataium.com'
-# print EMAIL_HOST_USER
-# print EMAIL_HOST_PASSWORD
+
 
 # Application definition
 
