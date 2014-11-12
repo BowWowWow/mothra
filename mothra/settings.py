@@ -23,6 +23,7 @@ PROJECT_PATH=os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '2z2o_q3p@a0w6rtvf7+-zolb87f8(6&u=5fof($+m@cpy2-3np'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -63,7 +64,7 @@ INSTALLED_APPS = (
     # jpb, 2014-08-20, added south
     'south',
     # jpb 2014-08-27, added tasteypie
-    # 'tastypie',
+    'tastypie',
     # jpb, 2014-09-29 added python-social-auth
     'social.apps.django_app.default',
     # internal
