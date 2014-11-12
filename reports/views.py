@@ -104,9 +104,9 @@ def dhl_file(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="dhldownload.csv"'
     writer = csv.writer(response,quoting=csv.QUOTE_NONNUMERIC)
-    writer.writerow(['Shopper Name','Shopper EMail','Shopper Phone','Shopper Intensity','Shopper First Activity','Shopper Last Lead Date','Shopper Last Activity','Shopper Last Site','Shopper Preferred Vehicle'])
+    writer.writerow(['Shopper Name','Shopper EMail','Shopper Phone','Shopper Intensity','Shopper First Activity','Shopper Last Lead Date','Shopper Last Activity','Shopper Last Site','Shopper Preferred Vehicle','Dealer'])
     for row in dhlleads:
-        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,row.shopper_first_activity,row.shopper_last_lead_date, row.shopper_last_activity,row.shopper_last_site,row.shopper_preferred_vehicle])
+        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,row.shopper_first_activity,row.shopper_last_lead_date, row.shopper_last_activity,row.shopper_last_site,row.shopper_preferred_vehicle,row.dealersite])
 
     return response 
 
