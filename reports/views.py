@@ -102,7 +102,8 @@ def dhl_file(request):
         print 'this user is a member of a group!'
         # dealergroup = dealeruser.userprofile.dealergroup
         dhldealers = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealers).order_by('-shopper_intensity')
+        dhldealersite = DealerSite.objects.filter(dealer=dhldealer)
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('-shopper_intensity')
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="dhldownload.csv"'
