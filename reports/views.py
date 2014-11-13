@@ -102,7 +102,7 @@ def dhl_file(request):
         print 'this user is a member of a group!'
         # dealergroup = dealeruser.userprofile.dealergroup
         dhldealers = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
-        dhldealersite = DealerSite.objects.filter(dealer=dhldealer)
+        dhldealersite = DealerSite.objects.filter(dealer=dhldealers)
         dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('-shopper_intensity')
     
     response = HttpResponse(content_type='text/csv')
