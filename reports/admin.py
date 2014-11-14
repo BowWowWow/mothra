@@ -17,7 +17,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.admin import User
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerMarketReport,UserProfile,DealerGroup
+from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerMarketReport,UserProfile,DealerDailyHitList,DealerGroup
 
 class DataiumDMAAdmin(admin.ModelAdmin):
     list_display = ('dataiumdmaid','dmaname')
@@ -131,9 +131,6 @@ class MarketReportYearMonthAdmin(admin.ModelAdmin):
     actions = ['make_marketreport','send_marketemail']
     send_marketemail.short_description = "Send Market Report"
 
-# start of DHL send for selected user in User object
-
-
 
 
 
@@ -199,7 +196,7 @@ class MyUserAdmin(UserAdmin):
                 try:
                     dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N',username=user)
                     
-                    subject = 'Dataium Daily Ups List' 
+                    subject = 'Dataium Daily Hit List' 
                     dhldealergroup = user.userprofile.dealergroup
                     
             # get the list of dhl leads for presentation in the email
