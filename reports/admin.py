@@ -17,7 +17,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth.admin import User
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerMarketReport,UserProfile,DealerDailyHitList,DealerGroup
+from .models import Dealer,DataiumDMA, DealerSite, MarketReportYearMonth,DealerMarketReport,UserProfile,DealerGroup
 
 class DataiumDMAAdmin(admin.ModelAdmin):
     list_display = ('dataiumdmaid','dmaname')
@@ -135,54 +135,6 @@ class MarketReportYearMonthAdmin(admin.ModelAdmin):
 
 
 
-# start of DHL sends for DailyHitList Object
-class DealerDailyHitListAdmin(admin.ModelAdmin):
-    # inlines = [
-    #      DealerDailyHitListInline,
-    # ]
-    
-    
-    def send_dhlemail(self, request, queryset):
-        print 'in send_dhlemail'
-        
-        # get the list of daily hit list subscribers
-        dealerusers = User.objects.filter(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N')
-
-        # for every user, build and send the email
-        for user in dealerusers:
-            subject = 'Dataium Daily Hit List' 
-            dhldealer = user.userprofile.dealer
-            # get the list of dhl leads for presentation in the email
-            dhlsite = DealerSite.objects.filter(dealer = dhldealer)
-            dhl = DealerDailyHitList.objects.filter(dealersite = dhlsite).order_by('-shopper_last_activity')[:10]
-            # since we are going to the cloud, build the right link with host
-            loginpurl = request.build_absolute_uri(reverse('django.contrib.auth.views.login'))
-            to = []
-            to = user.email.split(',')
-            from_email = 'no-reply@dataium.com'
-            ctx = {
-                'dealer':dhldealer,
-                'loginpurl':loginpurl,
-                'dhl':dhl,
-            }
-
-            message = get_template('client_dhlemail.html').render(Context(ctx))
-            msg = EmailMessage(subject,message,to=to,from_email=from_email)
-            msg.content_subtype = 'html'
-            # msg.send()
-
-                # END OF SEND EMAILS
-        self.message_user(request,"Daily Hit Lists have been sent.")
-        return HttpResponseRedirect(request.get_full_path())
-
-            
-    actions = ['send_dhlemail']
-    send_dhlemail.short_description = "Send Daily Hit List To All Users"
-
-
-# end of DHL sends
-
-
 
 
 
@@ -293,4 +245,4 @@ admin.site.register(DealerMarketReport)
 admin.site.register(DealerGroup,DealerGroupAdmin)
 admin.site.unregister(User)
 admin.site.register(User,MyUserAdmin)
-admin.site.register(DealerDailyHitList,DealerDailyHitListAdmin)
+
