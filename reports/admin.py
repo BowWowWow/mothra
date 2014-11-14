@@ -160,7 +160,7 @@ class MyUserAdmin(UserAdmin):
                 print "user is dealer"
                 try:
                     dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealer__dealerinactive='N',userprofile__dealer__dealerdeleted='N',username=user)
-                    subject = 'Dataium Daily Hit List' 
+                    subject = 'Dataium Daily Ups List' 
                     dhldealer = user.userprofile.dealer
             # get the list of dhl leads for presentation in the email
                     dhlsite = DealerSite.objects.filter(dealer = dhldealer)
