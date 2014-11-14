@@ -64,7 +64,7 @@ INSTALLED_APPS = (
     # jpb, 2014-08-20, added south
     'south',
     # jpb 2014-08-27, added tasteypie
-    'tastypie',
+    # 'tastypie',
     # jpb, 2014-09-29 added python-social-auth
     'social.apps.django_app.default',
     # internal
