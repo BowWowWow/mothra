@@ -65,7 +65,7 @@ def user_dhl(request):
 
         dhldealer = dealeruser.userprofile.dealer        
         dhldealersite = DealerSite.objects.get(dealer = dhldealer)
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity','-shopper_last_activity')
     except:
         
         try: 
@@ -77,7 +77,7 @@ def user_dhl(request):
             print dhldealer
             dhldealersite = DealerSite.objects.filter(dealer=dhldealer)
             print dhldealersite 
-            dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
+            dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity','-shopper_last_activity')
         # print locals()
         except:
             print 'No query'
@@ -102,14 +102,14 @@ def dhl_file(request):
 
         dhldealer = dealeruser.userprofile.dealer        
         dhldealersite = DealerSite.objects.get(dealer = dhldealer)
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity','-shopper_last_activity')
     except:
         dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N')
         print 'this user is a member of a group!'
         # dealergroup = dealeruser.userprofile.dealergroup
         dhldealers = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
         dhldealersite = DealerSite.objects.filter(dealer=dhldealers)
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
+        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity','-shopper_last_activity')
     
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="dhldownload.csv"'
