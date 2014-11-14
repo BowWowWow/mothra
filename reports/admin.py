@@ -196,7 +196,7 @@ class MyUserAdmin(UserAdmin):
                 try:
                     dealeruser = User.objects.get(userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N',username=user)
                     
-                    subject = 'Dataium Daily Hit List' 
+                    subject = 'Dataium Daily Ups List' 
                     dhldealergroup = user.userprofile.dealergroup
                     
             # get the list of dhl leads for presentation in the email
