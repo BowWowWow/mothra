@@ -2,6 +2,24 @@
 
 {% block dhlleads %}  
 
+       <table class="table table-striped table-hover ">
+  		<thead>
+    			<tr>
+      				<th>Shopper Name</th>
+      				<th>Shopper Email</th>
+      				<th>Shopper Phone</th>
+                                <th>Shopper Intensity</th>
+                                <th>Shopper First Activity</th>
+                                <th>Shopper Last Lead Date</th>
+                                <th>Shopper Last Activity</th>
+                                <th>Last Site Visited</th>
+                                <th>Preferred Vehicle</th>
+                                <th>Dealer Site</th>
+    			</tr>
+  		</thead>
+            <tbody>
+
+
             {% for row in dhlleads %}
             <tr>
                <td>{{row.full_name}}</td>

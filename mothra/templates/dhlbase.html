@@ -54,6 +54,9 @@
 
         <div class="page-header">
           {% if user.is_authenticated %}
+
+          {% if dealeruser %}
+
             <div class="pull-right btn-group">
 <a href="{% url 'reports:dhl_file' %}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Download List</a>
            
@@ -65,7 +68,7 @@
             {% else %}
                 <h3>Dealer Group: &nbsp;&nbsp;{{dealergroup.dealergroupname}}</h3>
            {% endif %}
-          
+              {% block dhlleads %} 
               <table class="table table-striped table-hover ">
   		<thead>
     			<tr>
@@ -82,7 +85,7 @@
     			</tr>
   		</thead>
   		<tbody>
-    			{% block dhlleads %} 
+    			
                         <tr>
       				<td>1</td>
       				<td>Column content</td>
@@ -92,6 +95,14 @@
                         {% endblock %}
                 </tbody>
                </table>
+
+        {% else %}
+            <p>User is not a member of a dealer or dealer group.  No results found.</p>
+
+
+        {% endif %}
+
+
         {% endif %}
 
         </div>

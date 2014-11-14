@@ -67,19 +67,25 @@ def user_dhl(request):
         dhldealersite = DealerSite.objects.get(dealer = dhldealer)
         dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
     except:
-        dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N')
-        print 'this user is a member of a group!'
-        dealergroup = dealeruser.userprofile.dealergroup
-        print dealergroup
-        dhldealer = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
-        print dhldealer
-        dhldealersite = DealerSite.objects.filter(dealer=dhldealer)
-        print dhldealersite 
-        dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
+        
+        try: 
+            dealeruser = User.objects.get(id=user_id,userprofile__wants_dailyhitlist=True,userprofile__dealergroup__dealergroupinactive='N',userprofile__dealergroup__dealergroupdeleted='N')
+            print 'this user is a member of a group!'
+            dealergroup = dealeruser.userprofile.dealergroup
+            print dealergroup
+            dhldealer = Dealer.objects.filter(dealergroup=dealeruser.userprofile.dealergroup)
+            print dhldealer
+            dhldealersite = DealerSite.objects.filter(dealer=dhldealer)
+            print dhldealersite 
+            dhlleads = DealerDailyHitList.objects.filter(dealersite=dhldealersite).order_by('dealersite','-shopper_intensity')
         # print locals()
-      
+        except:
+            print 'No query'
+            dealeruser = None 
 
     return render_to_response('userdhl.html',locals(),context_instance=RequestContext(request))  
+
+
 
 # jpb, 2014-10-22, added view to download file
 
