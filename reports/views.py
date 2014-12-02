@@ -18,6 +18,10 @@ from django.http import Http404
 # jpb, 9/30/2014, added for login requirement
 from django.contrib.auth.decorators import login_required
 
+# jpb, 12/2/2014, added to format date in download files
+from datetime import datetime
+from django.utils import formats
+
 # jpb, 10/1/2014, added password reset imports
 # from django.contrib.auth.views import password_reset, password_reset_confirm
 # from django.contrib.auth.views import password_reset as django_password_reset
@@ -116,7 +120,7 @@ def dhl_file(request):
     writer = csv.writer(response,quoting=csv.QUOTE_NONNUMERIC)
     writer.writerow(['Shopper Name','Shopper EMail','Shopper Phone','Shopper Intensity','Shopper First Activity','Shopper Last Lead Date','Shopper Last Activity','Shopper Last Site','Shopper Preferred Vehicle','Dealer'])
     for row in dhlleads:
-        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,row.shopper_first_activity,row.shopper_last_lead_date, row.shopper_last_activity,row.shopper_last_site,row.shopper_preferred_vehicle,row.dealersite])
+        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,row.shopper_first_activity_date.strftime("%m/%d/%Y"),row.shopper_last_lead_submitted_date.strftime("%m/%d/%Y"), row.shopper_last_activity_date.strftime("%m/%d/%Y"),row.shopper_last_site,row.shopper_preferred_vehicle,row.dealersite])
 
     return response 
 
