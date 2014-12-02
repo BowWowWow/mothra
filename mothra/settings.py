@@ -66,7 +66,7 @@ INSTALLED_APPS = (
     # jpb 2014-08-27, added tasteypie
     # 'tastypie',
     # jpb, 2014-09-29 added python-social-auth
-    'social.apps.django_app.default',
+    # 'social.apps.django_app.default',
     # internal
     # jpb, 2014-08-20, added reports
     'reports',
@@ -82,10 +82,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.google.GoogleOpenId',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
-    'social.backends.twitter.TwitterOAuth',
+#    'social.backends.google.GoogleOpenId',
+#    'social.backends.google.GoogleOAuth2',
+#    'social.backends.google.GoogleOAuth',
+#    'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -106,7 +106,7 @@ DATABASES = {
 
 	'ENGINE': 'django.db.backends.mysql',
 	'NAME': 'mothra',
-	'USER': '<user>',
+	'USER': '<username>',
 	'PASSWORD': '<password>',
 	'HOST': 'localhost',
 	'PORT': '3306',
