@@ -120,7 +120,24 @@ def dhl_file(request):
     writer = csv.writer(response,quoting=csv.QUOTE_NONNUMERIC)
     writer.writerow(['Shopper Name','Shopper EMail','Shopper Phone','Shopper Intensity','Shopper First Activity','Shopper Last Lead Date','Shopper Last Activity','Shopper Last Site','Shopper Preferred Vehicle','Dealer'])
     for row in dhlleads:
-        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,row.shopper_first_activity_date.strftime("%m/%d/%Y"),row.shopper_last_lead_submitted_date.strftime("%m/%d/%Y"), row.shopper_last_activity_date.strftime("%m/%d/%Y"),row.shopper_last_site,row.shopper_preferred_vehicle,row.dealersite])
+
+        if row.shopper_first_activity_date == None:
+            shop_first_activity = ""
+        else:
+            shop_first_activity = row.shopper_first_activity_date.strftime("%m/%d/%Y")
+
+        if row.shopper_last_lead_submitted_date == None:
+            shop_last_lead_submitted_date = ""
+        else:
+            shop_last_lead_submitted_date = row.shopper_last_lead_submitted_date.strftime("%m/%d/%Y")
+
+        if row.shopper_last_activity_date == None:
+            shop_last_activity_date = ""
+        else:
+            shop_last_activity_date = row.shopper_last_activity_date.strftime("%m/%d/%Y")
+
+
+        writer.writerow([row.full_name,row.shopper_email,row.shopper_phone,row.shopper_intensity,shop_first_activity,shop_last_lead_submitted_date, shop_last_activity_date,row.shopper_last_site,row.shopper_preferred_vehicle,row.dealersite])
 
     return response 
 
